@@ -12,6 +12,7 @@ router.get("/", async (req, res) => {
 })
 
 router.post("/update", async (req, res) => {
+  console.log(req.body);
   if (verifySignature(req.body, req.get("X-Hub-Signature"))) {
     res.status(200).send("yeet");
   } else {
@@ -24,8 +25,7 @@ function verifySignature(data, headerSignature) {
     const signature = crypto.createHmac("sha1", process.env.SECRET_TOKEN).update(data).digest("hex");
     return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(headerSignature));
   }
-  catch(err) {
-    console.log(err);
+  catch {
     return false;
   }
 }

@@ -12,6 +12,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.json());
+
 app.use("/", apiRoute);
 
 const port = process.env.PORT || 8080;
