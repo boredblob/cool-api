@@ -35,7 +35,6 @@ function sign(data) {
 function verifySignature(data, key) {
   try {
     const signature = sign(data);
-    console.log(signature, key);
     return crypto.timingSafeEqual(Buffer.from(signature, "utf-8"), Buffer.from(key, "utf-8"));
   }
   catch {
