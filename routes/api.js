@@ -20,8 +20,14 @@ router.post("/update", async (req, res) => {
 })
 
 function verifySignature(data, headerSignature) {
-  const signature = crypto.createHmac("sha1", process.env.SECRET_TOKEN).update(data).digest("hex");
-  return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(headerSignature));
+  try {
+    const signature = crypto.createHmac("sha1", process.env.SECRET_TOKEN).update(data).digest("hex");
+    return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(headerSignature));
+  }
+  catch(err) {
+    console.log(err);
+    return false;
+  }
 }
 
 module.exports = router;
