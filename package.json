@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/omerismyname/commit-push#readme",
   "dependencies": {
+    "crypto": "^1.0.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1"
   },
