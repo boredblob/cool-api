@@ -13,9 +13,9 @@ router.get("/", async (req, res) => {
 
 router.post("/update", async (req, res) => {
   if (verifySignature(req.body, req.get("X-Hub-Signature"))) {
-    res.send(200);
+    res.status(200);
   } else {
-    res.send(403);
+    res.status(403);
   }  
 })
 
