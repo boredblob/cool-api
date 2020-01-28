@@ -12,10 +12,11 @@ router.get("/", async (req, res) => {
 })
 
 router.post("/update", async (req, res) => {
-  console.log(req.body);
   if (verifySignature(req.body, req.get("X-Hub-Signature"))) {
+    console.log("Accepted");
     res.status(200).send("yeet");
   } else {
+    console.log("Denied");
     res.status(403).send("Access forbidden");
   }  
 })
