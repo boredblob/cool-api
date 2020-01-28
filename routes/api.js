@@ -4,10 +4,14 @@ const crypto = require("crypto");
 const fetch = require("node-fetch");
 dotenv.config();
 
-let tree = reloadTree().then(t => parseTree(t)).then(t => {tree = t;});
+let tree = reloadTree().then(t => {tree = t;});
 
 router.get("/tree", async (req, res) => {
   res.status(200).json(tree);
+})
+
+router.get("/parsedTree", async (req, res) => {
+  res.status(200).json(parseTree(tree));
 })
 
 router.get("/", async (req, res) => {
@@ -20,7 +24,7 @@ router.post("/update", async (req, res) => {
 
   if (verifySignature(data, key)) {
     console.log("Accepted");
-    tree = reloadTree().then(t => parseTree(t)).then(t => {tree = t;});
+    tree = reloadTree().then(t => {tree = t;});
     res.status(200).send("yeet");
   } else {
     console.log("Denied");
