@@ -11,7 +11,11 @@ router.get("/tree", async (req, res) => {
 })
 
 router.get("/parsedTree", async (req, res) => {
-  res.status(200).json(parseTree(tree));
+  if (req.query.files || req.query.files === "") {
+    res.status(200).json(parseFiles(tree));
+  } else {
+    res.status(200).json(parseTree(tree));
+  }
 })
 
 router.get("/", async (req, res) => {
@@ -86,6 +90,16 @@ function parseTree(tree) {
     }
   }
   return treeArray;
+}
+
+function parseFiles(tree) {
+  const fileArray = [];
+  for (const t of tree) {
+    if (t.type === "blob") {
+      fileArray.push(t.path);
+    }
+  }
+  return fileArray;
 }
 
 module.exports = router;
