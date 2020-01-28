@@ -13,9 +13,9 @@ router.get("/", async (req, res) => {
 
 router.post("/update", async (req, res) => {
   if (verifySignature(req.body, req.get("X-Hub-Signature"))) {
-    res.status(200);
+    res.status(200).send("yeet");
   } else {
-    res.status(403);
+    res.status(403).send("Access forbidden");
   }  
 })
 
