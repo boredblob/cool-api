@@ -10,14 +10,6 @@ router.get("/tree", async (req, res) => {
   res.status(200).json(tree);
 })
 
-router.get("/parsedTree", async (req, res) => {
-  if (req.query.files || req.query.files === "") {
-    res.status(200).json(parseFiles(tree));
-  } else {
-    res.status(200).json(parseTree(tree));
-  }
-})
-
 router.get("/", async (req, res) => {
   res.status(404).send("Tree at /tree");
 })
@@ -77,29 +69,6 @@ async function reloadTree() {
     })
     .catch(err => console.log("Error fetching data: " + err));
   });
-}
-
-function parseTree(tree) {
-  const treeArray = [];
-  for (const t of tree) {
-    if (t.type === "tree") {
-      treeArray.push("index.html?dir=" + t.path);
-    }
-    if (t.type === "blob") {
-      treeArray.push(t.path);
-    }
-  }
-  return treeArray;
-}
-
-function parseFiles(tree) {
-  const fileArray = [];
-  for (const t of tree) {
-    if (t.type === "blob") {
-      fileArray.push(t.path);
-    }
-  }
-  return fileArray;
 }
 
 module.exports = router;
