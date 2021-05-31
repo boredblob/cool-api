@@ -1,10 +1,9 @@
+require("dotenv").config();
 const router = require("express").Router();
-const dotenv = require("dotenv");
 const crypto = require("crypto");
 const fetch = require("node-fetch");
-dotenv.config();
 
-let tree = reloadTree().then(t => {tree = t;});
+let tree = reloadTree().then(t => tree = t);
 
 router.get("/tree", async (req, res) => {
   res.status(200).json(tree);
@@ -20,7 +19,7 @@ router.post("/update", async (req, res) => {
 
   if (verifySignature(data, key)) {
     console.log("Accepted");
-    tree = reloadTree().then(t => {tree = t;});
+    reloadTree().then(t => tree = t);
     res.status(200).send("yeet");
   } else {
     console.log("Denied");
@@ -58,7 +57,7 @@ async function reloadTree() {
     .then(data => {
       const tree_hash = data.commit.tree.sha;
       if (tree_hash) {
-        fetch("https://api.github.com/repos/omerismyname/random-testing-stuff/git/trees/" + tree_hash + "?recursive=1", options)
+        fetch(`https://api.github.com/repos/omerismyname/random-testing-stuff/git/trees/${tree_hash}?recursive=1`, options)
         .then(response => response.json())
         .then(data => {
           resolve(data.tree);
